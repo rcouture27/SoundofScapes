@@ -5,8 +5,11 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_favorite"
-        android:orderInCategory="300"
-        android:title="User"></item>
+        android:id="@+id/item_1"
+        android:title="Sound 1"></item>
+
+    <item
+        android:id="@+id/item_2"
+        android:title="Sound 2"></item>
 
 </menu>

@@ -9,15 +9,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar topToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        topToolbar = (Toolbar)findViewById(R.id.myToolbar);
-        setSupportActionBar(topToolbar);
     }
 
     @Override
@@ -29,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_favorite) {
-            Toast.makeText(MainActivity.this, "Action touched", Toast.LENGTH_LONG).show();
+        if (id == R.id.item_1) {
+            Toast.makeText(MainActivity.this, "Item 1 selected", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if (id == R.id.item_2) {
+            Toast.makeText(MainActivity.this, "Item 2 selected", Toast.LENGTH_LONG).show();
             return true;
         }
 
