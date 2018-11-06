@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">SoundScapeProject</string>
+    <string name="buttonRandomize">Randomize</string>
+    <string name="buttonStart">Start</string>
+    <string name="buttonReturn">Return</string>
+    <string name="buttonPlay">Play</string>
+    <string name="choose_your_sounds">Choose Your Sounds</string>
+    <string name="name_your_scoundscape">Name Your Soundscape…</string>
+    <string name="pick_your_sounds">Choose a Sound</string>
+    <string name="set_your_volume">Set Your Volume</string>
+    <string name="sound_hint">Primary Sound…</string>
+
+    <string-array name="primary_sounds">
+        <item>Primary Sound…</item>
+        <item>Rain</item>
+        <item>Ocean</item>
+        <item>Fireplace</item>
+    </string-array>
+
+    <string-array name="secondary_sounds">
+        <item>Secondary Sound…</item>
+        <item>Thunder</item>
+        <item>Seagulls</item>
+        <item>Crickets</item>
+    </string-array>
+
+    <string-array name="tertiary_sounds">
+        <item>Tertiary Sound…</item>
+        <item>Birds Chirping</item>
+        <item>Harbor Bells</item>
+        <item>Leaves Rustling</item>
+    </string-array>
+
 </resources>
