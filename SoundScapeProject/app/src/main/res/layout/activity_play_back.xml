@@ -8,10 +8,10 @@
 
     <Button
         android:id="@+id/buttonReturn"
-        android:layout_width="160dp"
-        android:layout_height="74dp"
+        android:layout_width="125dp"
+        android:layout_height="53dp"
         android:text="@string/buttonReturn"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,12 +21,12 @@
     <TextView
         android:id="@+id/scapeTitle"
         android:layout_width="297dp"
-        android:layout_height="71dp"
+        android:layout_height="94dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="84dp"
         android:layout_marginEnd="56dp"
-        android:textAlignment="center"
         android:text=""
+        android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.98"
@@ -44,6 +44,8 @@
         android:background="@drawable/pause_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

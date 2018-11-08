@@ -9,6 +9,7 @@
     <string name="pick_your_sounds">Choose a Sound</string>
     <string name="set_your_volume">Set Your Volume</string>
     <string name="sound_hint">Primary Sound…</string>
+    <string name="konami">Copyright Konami 2001</string>
 
     <string-array name="primary_sounds">
         <item>Primary Sound…</item>
