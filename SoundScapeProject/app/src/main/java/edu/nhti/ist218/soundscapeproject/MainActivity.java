@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer harbor_sound;
     private MediaPlayer leaves_sound;
 
+    EditText userTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         tertiaryVolume = findViewById(R.id.tertiarySeekBar);
 
 
-
         configureStartButton();
     }
 
@@ -120,7 +121,11 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PlayBackActivity.class));
+                userTitle = findViewById(R.id.editScapeName);
+                Intent intent = new Intent(MainActivity.this, PlayBackActivity.class);
+                intent.putExtra("userTitle", userTitle.getText().toString());
+
+                startActivity(intent);
             }
         });
     }
