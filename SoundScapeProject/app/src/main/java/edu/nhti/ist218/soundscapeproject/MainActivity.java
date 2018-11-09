@@ -1,10 +1,13 @@
 package edu.nhti.ist218.soundscapeproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int PAUSE_CODE = 98;
+    public static final int PLAY_CODE = 99;
 
     private Spinner primarySpinner;
     private Spinner secondarySpinner;
@@ -37,6 +43,19 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer harbor_sound;
     private MediaPlayer leaves_sound;
 
+    private MediaPlayer[] mediaPlayers;
+
+    public Spinner getPrimarySpinner() {
+        return primarySpinner;
+    }
+
+    public Spinner getSecondarySpinner() {
+        return secondarySpinner;
+    }
+
+    public Spinner getTertiarySpinner() {
+        return tertiarySpinner;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
         harbor_sound = MediaPlayer.create(this, R.raw.harbor_bells_sound);
         leaves_sound = MediaPlayer.create(this, R.raw.rustling_leaves_sound);
 
-
+        mediaPlayers = new MediaPlayer[] {rain_sound,
+                ocean_sound, fire_sound, thunder_sound, seagulls_sound, crickets_sound,
+                birds_sound, harbor_sound, leaves_sound};
 
         //create audio arrays
         final MediaPlayer[] primaryAudio = createAudioArray(rain_sound, ocean_sound, fire_sound);
@@ -76,9 +97,10 @@ public class MainActivity extends AppCompatActivity {
         tertiarySpinner = findViewById(R.id.tertiarySpinner);
 
         //populates spinners with string array
-        populateSpinner(primarySpinner, primarySounds, primaryAudio);
-        populateSpinner(secondarySpinner, secondarySounds, secondaryAudio);
-        populateSpinner(tertiarySpinner, tertiarySounds,tertiaryAudio);
+        //The populateSpinner function now indicates at what points in the mediaPlayers array each spinner's items begin and end
+        populateSpinner(primarySpinner, primarySounds, primaryAudio, 0, 2);
+        populateSpinner(secondarySpinner, secondarySounds, secondaryAudio, 3, 5);
+        populateSpinner(tertiarySpinner, tertiarySounds,tertiaryAudio, 6, 8);
 
 
 
@@ -90,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         configureStartButton();
+        pausePlayers();
     }
 
     @Override
@@ -124,7 +147,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void populateSpinner(Spinner spinner, String[] soundsArray, final MediaPlayer[] audioArray) {
+    private void populateSpinner(Spinner spinner, String[] soundsArray, final MediaPlayer[] audioArray, int firstSoundIndex, int lastSoundIndex) {
+        final int firstSound = firstSoundIndex;
+        final int lastSound = lastSoundIndex;
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, R.layout.support_simple_spinner_dropdown_item, soundsArray){
@@ -162,42 +187,14 @@ public class MainActivity extends AppCompatActivity {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
                 // If user change the default selection
                 // First item is disable and it is used for hint
-                switch (position) {
-                    case 1:
-                        if (audioArray[1].isPlaying()) {
-                            audioArray[1].pause();
-                        }
-                        if (audioArray[2].isPlaying()) {
-                            audioArray[2].pause();
-                        }
-                        audioArray[0].start();
 
-                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        if (audioArray[0].isPlaying()) {
-                            audioArray[0].pause();
-                        }
-                        if (audioArray[2].isPlaying()) {
-                            audioArray[2].pause();
-                        }
-                        audioArray[1].start();
-
-                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        break;
-                    case 3:
-                        if (audioArray[0].isPlaying()) {
-                            audioArray[0].pause();
-                        }
-                        if (audioArray[1].isPlaying()) {
-                            audioArray[1].pause();
-                        }
-                        audioArray[2].start();
-
-                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
+                for (int i = 0; i < lastSound - firstSound + 1; i++) {
+                    if (i == position) {
+                        mediaPlayers[i + firstSound].start();
+                    } else {
+                        mediaPlayers[i + firstSound].pause();
+                    }
+                    Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -206,6 +203,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == PAUSE_CODE && resultCode == RESULT_OK) {
+                String requiredValue = data.getStringExtra("key");//idk what this does lol
+                pausePlayers();
+            }
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, e.toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void pausePlayers() {
+        for (int i = 0; i < mediaPlayers.length; i++) {
+            mediaPlayers[i].pause();
+        }
+    }
+
+    public void playPlayers(int[] playerIndex) {
+        for (MediaPlayer p : mediaPlayers) {
+            p.start();
+        }
     }
 
     private MediaPlayer[] createAudioArray(MediaPlayer sound1, MediaPlayer sound2, MediaPlayer sound3) {
