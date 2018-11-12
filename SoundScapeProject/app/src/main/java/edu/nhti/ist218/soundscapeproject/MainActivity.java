@@ -34,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     private PreviewMode previewMode = PreviewMode.None;
 
+    public static MainActivity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mainActivity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.toolbar);
@@ -106,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             pauseAll();
         }
+    }
+
+    public PreviewMode getPreviewMode() {
+        return previewMode;
     }
 
     public void playAll () {
