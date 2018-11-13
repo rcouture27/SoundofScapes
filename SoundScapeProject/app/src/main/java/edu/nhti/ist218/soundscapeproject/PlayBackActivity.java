@@ -17,6 +17,7 @@ public class PlayBackActivity extends AppCompatActivity {
 
     Button playButton;
     TextView userTitle;
+    PreviewMode previousMode = PreviewMode.None;
 
     MediaPlayer konami = null;
 
@@ -26,7 +27,10 @@ public class PlayBackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_back);
 
         userTitle = findViewById(R.id.scapeTitle);
-        final Button playButton = findViewById(R.id.playButton);
+        playButton = findViewById(R.id.playButton);
+        previousMode = MainActivity.mainActivity.getPreviewMode();
+        MainActivity.mainActivity.setPreviewMode(PreviewMode.All);
+        playButton.setBackgroundResource(R.drawable.pause_button);
 
         Intent intent = getIntent();
         userTitle.setText(intent.getStringExtra("userTitle"));
@@ -49,11 +53,12 @@ public class PlayBackActivity extends AppCompatActivity {
                 if (playButton.equals(R.drawable.konami_dog)) {
                     playButton.setBackgroundResource(R.drawable.konami_dog);
                 }
-                if(playButton.equals(R.drawable.pause_button)){
+                if(MainActivity.mainActivity.getPreviewMode() == PreviewMode.All){
                     playButton.setBackgroundResource(R.drawable.play_button);
-                }
-                if (playButton.equals(R.drawable.play_button)){
+                    MainActivity.mainActivity.setPreviewMode(PreviewMode.None);
+                } else if (MainActivity.mainActivity.getPreviewMode() == PreviewMode.None){
                     playButton.setBackgroundResource(R.drawable.pause_button);
+                    MainActivity.mainActivity.setPreviewMode(PreviewMode.All);
                 }
             }
         });
@@ -77,6 +82,7 @@ public class PlayBackActivity extends AppCompatActivity {
                 if (konami != null) {
                     konami.stop();
                 }
+                MainActivity.mainActivity.setPreviewMode(previousMode);
                 finish();
             }
         });

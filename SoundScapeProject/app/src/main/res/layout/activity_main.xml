@@ -23,6 +23,38 @@
         tools:ignore="DuplicateIds" />
 
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="194dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:checkedButton="@+id/previewNoneButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/previewNoneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="None" />
+
+        <RadioButton
+            android:id="@+id/previewVolumeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Volume Change" />
+
+        <RadioButton
+            android:id="@+id/previewAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="All" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="162dp"
@@ -33,6 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Hiding this and replacing with preview options
     <Button
         android:id="@+id/buttonRandom"
         android:layout_width="0dp"
@@ -51,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="442dp"
         android:layout_marginBottom="7dp"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
     <Spinner
         android:id="@+id/primarySpinner"
@@ -177,5 +210,15 @@
         <!--app:layout_constraintEnd_toEndOf="parent"-->
         <!--app:layout_constraintStart_toStartOf="parent"-->
         <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Preview Mode"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
