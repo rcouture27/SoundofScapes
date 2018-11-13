@@ -1,3 +1,4 @@
+
 <resources>
     <string name="app_name">SoundScapeProject</string>
     <string name="buttonRandomize">Randomize</string>
@@ -8,28 +9,53 @@
     <string name="name_your_scoundscape">Name Your Soundscape…</string>
     <string name="pick_your_sounds">Choose a Sound</string>
     <string name="set_your_volume">Set Your Volume</string>
-    <string name="sound_hint">Primary Sound…</string>
+    <string name="sound_hint">Primary Sound</string>
     <string name="konami">Copyright Konami 2001</string>
+    <string name="imageView">GIF display</string>
+
+    <!--<string name="tornado">Tornado</string>-->
+    <!--<string name="tornado">Tornado</string>-->
+    <!--<string name="thunderstorm">Thunder Storm</string>-->
+    <!--<string name="street">Street</string>-->
+    <!--<string name="stairs_storm">Stair Storm</string>-->
+    <!--<string name="rain_ocean">Rain and Ocean</string>-->
+    <!--<string name="rain">Rain</string>-->
+    <!--<string name="lightning">Lightning</string>-->
+
+
 
     <string-array name="primary_sounds">
-        <item>Primary Sound…</item>
+        <item>Primary Sound</item>
         <item>Rain</item>
         <item>Ocean</item>
         <item>Fireplace</item>
     </string-array>
 
     <string-array name="secondary_sounds">
-        <item>Secondary Sound…</item>
+        <item>Secondary Sound</item>
         <item>Thunder</item>
         <item>Seagulls</item>
         <item>Crickets</item>
     </string-array>
 
     <string-array name="tertiary_sounds">
-        <item>Tertiary Sound…</item>
+        <item>Tertiary Sound</item>
         <item>Birds Chirping</item>
         <item>Harbor Bells</item>
         <item>Leaves Rustling</item>
+    </string-array>
+
+    <string-array name="gif_spinner">
+        <item>Choose GIF</item>
+        <item>Tornado</item>
+        <item>Torndo 2</item>
+        <item>storm</item>
+        <item>storm2</item>
+        <item>Street</item>
+        <item>Rain and Ocean</item>
+        <item>Rain</item>
+        <item>Lightning</item>
+
     </string-array>
 
 </resources>
