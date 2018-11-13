@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,15 +34,13 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar secondaryVolume;
     private SeekBar tertiaryVolume;
 
-    private MediaPlayer rain_sound;
-    private MediaPlayer ocean_sound;
-    private MediaPlayer fire_sound;
-    private MediaPlayer thunder_sound;
-    private MediaPlayer seagulls_sound;
-    private MediaPlayer crickets_sound;
-    private MediaPlayer birds_sound;
-    private MediaPlayer harbor_sound;
-    private MediaPlayer leaves_sound;
+    private static MediaPlayer[] audio;
+
+    private EditText userTitle;
+
+    private static MediaPlayer primaryPlaying = null;
+    private static MediaPlayer secondaryPlaying = null;
+    private static MediaPlayer tertiaryPlaying = null;
 
     private MediaPlayer[] mediaPlayers;
 
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public Spinner getTertiarySpinner() {
         return tertiarySpinner;
     }
+    private final static int maxVolume = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,36 +65,37 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         //initialize mp3 files
-        rain_sound = MediaPlayer.create(this, R.raw.rain_sound);
-        ocean_sound = MediaPlayer.create(this, R.raw.ocean_sound);
-        fire_sound = MediaPlayer.create(this, R.raw.fire_sound);
+        MediaPlayer rain_sound = MediaPlayer.create(this, R.raw.rain_sound);
+        MediaPlayer ocean_sound = MediaPlayer.create(this, R.raw.ocean_sound);
+        MediaPlayer fire_sound = MediaPlayer.create(this, R.raw.fire_sound);
 
-        thunder_sound = MediaPlayer.create(this, R.raw.thunder_sound);
-        seagulls_sound = MediaPlayer.create(this, R.raw.seagulls_sound);
-        crickets_sound = MediaPlayer.create(this, R.raw.crickets_sound);
+        MediaPlayer thunder_sound = MediaPlayer.create(this, R.raw.thunder_sound);
+        MediaPlayer seagulls_sound = MediaPlayer.create(this, R.raw.seagulls_sound);
+        MediaPlayer crickets_sound = MediaPlayer.create(this, R.raw.crickets_sound);
 
-        birds_sound = MediaPlayer.create(this, R.raw.birds_chirping_sound);
-        harbor_sound = MediaPlayer.create(this, R.raw.harbor_bells_sound);
-        leaves_sound = MediaPlayer.create(this, R.raw.rustling_leaves_sound);
+        MediaPlayer birds_sound = MediaPlayer.create(this, R.raw.birds_chirping_sound);
+        MediaPlayer harbor_sound = MediaPlayer.create(this, R.raw.harbor_bells_sound);
+        MediaPlayer leaves_sound = MediaPlayer.create(this, R.raw.rustling_leaves_sound);
 
         mediaPlayers = new MediaPlayer[] {rain_sound,
                 ocean_sound, fire_sound, thunder_sound, seagulls_sound, crickets_sound,
                 birds_sound, harbor_sound, leaves_sound};
 
-        //create audio arrays
-        final MediaPlayer[] primaryAudio = createAudioArray(rain_sound, ocean_sound, fire_sound);
-        final MediaPlayer[] secondaryAudio = createAudioArray(thunder_sound, seagulls_sound, crickets_sound);
-        final MediaPlayer[] tertiaryAudio = createAudioArray(birds_sound, harbor_sound, leaves_sound);
+
+        //add mp3 to audio array
+        audio = new MediaPlayer[] {rain_sound, ocean_sound, fire_sound, thunder_sound,
+                            seagulls_sound, crickets_sound, birds_sound, harbor_sound, leaves_sound};
 
         //initializes string array from strings xml
         String[] primarySounds = getResources().getStringArray(R.array.primary_sounds);
         String[] secondarySounds = getResources().getStringArray(R.array.secondary_sounds);
         String[] tertiarySounds = getResources().getStringArray(R.array.tertiary_sounds);
 
-        //initializes spinners
-        primarySpinner = findViewById(R.id.primarySpinner);
-        secondarySpinner = findViewById(R.id.secondarySpinner);
-        tertiarySpinner = findViewById(R.id.tertiarySpinner);
+        //initializes spinners and adds them to an array
+        Spinner primarySpinner = findViewById(R.id.primarySpinner);
+        Spinner secondarySpinner = findViewById(R.id.secondarySpinner);
+        Spinner tertiarySpinner = findViewById(R.id.tertiarySpinner);
+        Spinner[] spinners = new Spinner[] {primarySpinner, secondarySpinner, tertiarySpinner};
 
         //populates spinners with string array
         //The populateSpinner function now indicates at what points in the mediaPlayers array each spinner's items begin and end
@@ -102,14 +103,14 @@ public class MainActivity extends AppCompatActivity {
         populateSpinner(secondarySpinner, secondarySounds, secondaryAudio, 3, 5);
         populateSpinner(tertiarySpinner, tertiarySounds,tertiaryAudio, 6, 8);
 
-
-
         //initialize seek bars
         primaryVolume = findViewById(R.id.primarySeekBar);
         secondaryVolume = findViewById(R.id.secondarySeekBar);
         tertiaryVolume = findViewById(R.id.tertiarySeekBar);
 
-
+        populateSpinner(spinners[0], primarySounds, 0);
+        populateSpinner(spinners[1], secondarySounds, 3);
+        populateSpinner(spinners[2], tertiarySounds, 6);
 
         configureStartButton();
         pausePlayers();
@@ -142,7 +143,11 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PlayBackActivity.class));
+                userTitle = findViewById(R.id.editScapeName);
+                Intent intent = new Intent(MainActivity.this, PlayBackActivity.class);
+                intent.putExtra("userTitle", userTitle.getText().toString());
+
+                startActivity(intent);
             }
         });
     }
@@ -150,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
     private void populateSpinner(Spinner spinner, String[] soundsArray, final MediaPlayer[] audioArray, int firstSoundIndex, int lastSoundIndex) {
         final int firstSound = firstSoundIndex;
         final int lastSound = lastSoundIndex;
+
+    private void populateSpinner(final Spinner spinner, String[] soundsArray, final int soundNum) {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, R.layout.support_simple_spinner_dropdown_item, soundsArray){
@@ -195,6 +202,25 @@ public class MainActivity extends AppCompatActivity {
                         mediaPlayers[i + firstSound].pause();
                     }
                     Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                    
+                switch (position) {
+                    case 1:
+                        setVolumeSlider(soundNum);
+
+                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        setVolumeSlider(soundNum + 1);
+
+                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        setVolumeSlider(soundNum + 2);
+
+                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -237,7 +263,100 @@ public class MainActivity extends AppCompatActivity {
         audioArray[0] = sound1;
         audioArray[1] = sound2;
         audioArray[2] = sound3;
+    private void setVolumeSlider(int i){
 
-        return audioArray;
+        primaryVolume = findViewById(R.id.primarySeekBar);
+        secondaryVolume = findViewById(R.id.secondarySeekBar);
+        tertiaryVolume = findViewById(R.id.tertiarySeekBar);
+
+
+        if(i < 3) {
+
+            if (primaryPlaying != null) {
+                primaryPlaying.pause();
+            }
+            primaryPlaying = audio[i];
+            primaryVolume.setMax(maxVolume);
+            primaryVolume.setProgress(maxVolume);
+            primaryPlaying.start();
+            primaryPlaying.setLooping(true);
+
+            primaryVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                    float volume = (float) (1 - (Math.log(maxVolume - progress) / Math.log(maxVolume)));
+                    primaryPlaying.setVolume(volume, volume);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        }
+        if (i >=3 && i < 6) {
+
+            if (secondaryPlaying != null) {
+                secondaryPlaying.pause();
+            }
+            secondaryPlaying = audio[i];
+            secondaryVolume.setMax(maxVolume);
+            secondaryVolume.setProgress(maxVolume);
+            secondaryPlaying.start();
+            secondaryPlaying.setLooping(true);
+
+            secondaryVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                    float volume = (float) (1 - (Math.log(maxVolume - progress) / Math.log(maxVolume)));
+                    secondaryPlaying.setVolume(volume, volume);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        }
+        if (i >= 6 && i < 9) {
+
+            if (tertiaryPlaying != null) {
+                tertiaryPlaying.pause();
+            }
+            tertiaryPlaying = audio[i];
+            tertiaryVolume.setMax(maxVolume);
+            tertiaryVolume.setProgress(maxVolume);
+            tertiaryPlaying.start();
+            tertiaryPlaying.setLooping(true);
+
+            tertiaryVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                    float volume = (float) (1 - (Math.log(maxVolume - progress) / Math.log(maxVolume)));
+                    tertiaryPlaying.setVolume(volume, volume);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        }
+
     }
 }
