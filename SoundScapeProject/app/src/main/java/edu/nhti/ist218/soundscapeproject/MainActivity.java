@@ -1,10 +1,8 @@
 package edu.nhti.ist218.soundscapeproject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,16 +22,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int PAUSE_CODE = 98;
-    public static final int PLAY_CODE = 99;
-
-    private Spinner primarySpinner;
-    private Spinner secondarySpinner;
-    private Spinner tertiarySpinner;
-
-    private SeekBar primaryVolume;
-    private SeekBar secondaryVolume;
-    private SeekBar tertiaryVolume;
     private SeekBar[] volumeSliders = { null, null, null };
 
     private static MediaPlayer[][] audio;
@@ -42,19 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static MediaPlayer[] mediaPlayers = { null, null, null };
 
-    private MediaPlayer[] mediaPlayers;
-
-    public Spinner getPrimarySpinner() {
-        return primarySpinner;
-    }
-
-    public Spinner getSecondarySpinner() {
-        return secondarySpinner;
-    }
-
-    public Spinner getTertiarySpinner() {
-        return tertiarySpinner;
-    }
     private final static int maxVolume = 100;
 
     private PreviewMode previewMode = PreviewMode.None;
@@ -82,11 +57,6 @@ public class MainActivity extends AppCompatActivity {
         MediaPlayer harbor_sound = MediaPlayer.create(this, R.raw.harbor_bells_sound);
         MediaPlayer leaves_sound = MediaPlayer.create(this, R.raw.rustling_leaves_sound);
 
-        mediaPlayers = new MediaPlayer[] {rain_sound,
-                ocean_sound, fire_sound, thunder_sound, seagulls_sound, crickets_sound,
-                birds_sound, harbor_sound, leaves_sound};
-
-
         //add mp3 to audio array
         audio = new MediaPlayer[][] { {rain_sound, ocean_sound, fire_sound},
                 { thunder_sound, seagulls_sound, crickets_sound },
@@ -104,16 +74,6 @@ public class MainActivity extends AppCompatActivity {
         Spinner[] spinners = new Spinner[] {primarySpinner, secondarySpinner, tertiarySpinner};
 
         //populates spinners with string array
-        //The populateSpinner function now indicates at what points in the mediaPlayers array each spinner's items begin and end
-        populateSpinner(primarySpinner, primarySounds, primaryAudio, 0, 2);
-        populateSpinner(secondarySpinner, secondarySounds, secondaryAudio, 3, 5);
-        populateSpinner(tertiarySpinner, tertiarySounds,tertiaryAudio, 6, 8);
-
-        //initialize seek bars
-        primaryVolume = findViewById(R.id.primarySeekBar);
-        secondaryVolume = findViewById(R.id.secondarySeekBar);
-        tertiaryVolume = findViewById(R.id.tertiarySeekBar);
-
         populateSpinner(spinners[0], primarySounds, 0);
         populateSpinner(spinners[1], secondarySounds, 1);
         populateSpinner(spinners[2], tertiarySounds, 2);
@@ -207,10 +167,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void populateSpinner(Spinner spinner, String[] soundsArray, final MediaPlayer[] audioArray, int firstSoundIndex, int lastSoundIndex) {
-        final int firstSound = firstSoundIndex;
-        final int lastSound = lastSoundIndex;
-
     private void populateSpinner(final Spinner spinner, String[] soundsArray, final int playerNum) {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -249,39 +205,10 @@ public class MainActivity extends AppCompatActivity {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
                 // If user change the default selection
                 // First item is disable and it is used for hint
-
-                for (int i = 0; i < lastSound - firstSound + 1; i++) {
-                    if (i == position) {
-                        mediaPlayers[i + firstSound].start();
-                    } else {
-                        mediaPlayers[i + firstSound].pause();
-                    }
-                    Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-
                 if (position == 0)
                     return;
                 setVolumeSlider(position - 1, playerNum);
                 Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                /*
-                switch (position) {
-                    case 1:
-                        setVolumeSlider(soundNum, playerNum);
-
-                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        setVolumeSlider(soundNum);
-
-                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        break;
-                    case 3:
-                        setVolumeSlider(soundNum );
-
-                        Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                }*/
             }
 
             @Override
@@ -290,39 +217,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        try {
-            super.onActivityResult(requestCode, resultCode, data);
-
-            if (requestCode == PAUSE_CODE && resultCode == RESULT_OK) {
-                String requiredValue = data.getStringExtra("key");//idk what this does lol
-                pausePlayers();
-            }
-        } catch (Exception e) {
-            Toast.makeText(MainActivity.this, e.toString(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void pausePlayers() {
-        for (int i = 0; i < mediaPlayers.length; i++) {
-            mediaPlayers[i].pause();
-        }
-    }
-
-    public void playPlayers(int[] playerIndex) {
-        for (MediaPlayer p : mediaPlayers) {
-            p.start();
-        }
-    }
-
-    private MediaPlayer[] createAudioArray(MediaPlayer sound1, MediaPlayer sound2, MediaPlayer sound3) {
-        MediaPlayer[] audioArray = new MediaPlayer[3];
-        audioArray[0] = sound1;
-        audioArray[1] = sound2;
-        audioArray[2] = sound3;
 
     private void setVolumeSlider(int clipNum, final int playerNum){
 
@@ -363,94 +257,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        /*
-        if(clipNum < 3) {
-
-            if (primaryPlaying != null) {
-                primaryPlaying.pause();
-            }
-            primaryPlaying = audio[clipNum];
-            primaryVolume.setMax(maxVolume);
-            primaryVolume.setProgress(maxVolume);
-            primaryPlaying.start();
-            primaryPlaying.setLooping(true);
-
-            primaryVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                    float volume = (float) (1 - (Math.log(maxVolume - progress) / Math.log(maxVolume)));
-                    primaryPlaying.setVolume(volume, volume);
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-        }
-        if (clipNum >=3 && clipNum < 6) {
-
-            if (secondaryPlaying != null) {
-                secondaryPlaying.pause();
-            }
-            secondaryPlaying = audio[clipNum];
-            secondaryVolume.setMax(maxVolume);
-            secondaryVolume.setProgress(maxVolume);
-            secondaryPlaying.start();
-            secondaryPlaying.setLooping(true);
-
-            secondaryVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                    float volume = (float) (1 - (Math.log(maxVolume - progress) / Math.log(maxVolume)));
-                    secondaryPlaying.setVolume(volume, volume);
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-        }
-        if (clipNum >= 6 && clipNum < 9) {
-
-            if (tertiaryPlaying != null) {
-                tertiaryPlaying.pause();
-            }
-            tertiaryPlaying = audio[clipNum];
-            tertiaryVolume.setMax(maxVolume);
-            tertiaryVolume.setProgress(maxVolume);
-            tertiaryPlaying.start();
-            tertiaryPlaying.setLooping(true);
-
-            tertiaryVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                    float volume = (float) (1 - (Math.log(maxVolume - progress) / Math.log(maxVolume)));
-                    tertiaryPlaying.setVolume(volume, volume);
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-        }
-        */
     }
 }
