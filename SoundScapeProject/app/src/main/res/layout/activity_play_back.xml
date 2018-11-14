@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".PlayBackActivity">
 
     <Button
@@ -11,8 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:background="#AAADB0"
         android:text="@string/buttonReturn"
         android:textSize="18sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +25,14 @@
     <TextView
         android:id="@+id/scapeTitle"
         android:layout_width="297dp"
-        android:layout_height="63dp"
+        android:layout_height="95dp"
+        android:layout_marginEnd="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="56dp"
+        android:fontFamily="@font/comfortaa_bold"
         android:text=""
         android:textAlignment="center"
+        android:textColor="@color/text"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.98"
@@ -37,12 +42,12 @@
 
     <Button
         android:id="@+id/playButton"
-        android:layout_width="87dp"
-        android:layout_height="82dp"
+        android:layout_width="70dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/pause_button"
         app:layout_constraintBottom_toTopOf="@+id/buttonReturn"
         app:layout_constraintEnd_toEndOf="parent"
