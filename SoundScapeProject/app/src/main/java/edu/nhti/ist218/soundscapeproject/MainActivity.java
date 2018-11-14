@@ -258,11 +258,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         Toast.makeText(parent.getContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        PlayBackActivity.storm = true;
+                        PlayBackActivity.galaxy = true;
                         break;
                     case 4:
                         Toast.makeText(parent.getContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
-                        PlayBackActivity.storm2 = true;
+                        PlayBackActivity.storm = true;
                         break;
                     case 5:
                         Toast.makeText(parent.getContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
@@ -279,6 +279,11 @@ public class MainActivity extends AppCompatActivity {
                     case 8:
                         Toast.makeText(parent.getContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
                         PlayBackActivity.lightning = true;
+                        break;
+
+                    case 9:
+                        Toast.makeText(parent.getContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                        PlayBackActivity.mindcontrol = true;
                         break;
                     default:
                         break;

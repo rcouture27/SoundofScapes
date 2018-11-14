@@ -18,12 +18,13 @@ public class PlayBackActivity extends AppCompatActivity {
     //gif bools
     public static boolean tornado = false;
     public static boolean tornado2 = false;
+    public static boolean galaxy = false;
     public static boolean storm = false;
-    public static boolean storm2 = false;
     public static boolean street = false;
     public static boolean rain_ocean = false;
     public static boolean rain = false;
     public static boolean lightning = false;
+    public static boolean mindcontrol = false;
 
     Button playButton;
     TextView userTitle;
@@ -33,75 +34,86 @@ public class PlayBackActivity extends AppCompatActivity {
 
 
     @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_play_back);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_play_back);
 
-            //Loads gifs
-            if (tornado) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.tornado)
-                        .apply(new RequestOptions().override(2400, 1800))
-                        .into(imageView);
-                tornado = false;
-            }
+        ImageView imageView;
 
-            if (tornado2) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.tornado2)
-                        .into(imageView);
-                tornado2 = false;
-            }
+        //Loads gifs
+        if (tornado) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.tornado)
+                    .apply(new RequestOptions().override(3400, 2800))
+                    .into(imageView);
+            tornado = false;
+        }
 
-            if (storm) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.thunderstorm)
-                        .into(imageView);
-                storm = false;
-            }
+        if (tornado2) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.tornado2test1)
+                    .apply(new RequestOptions().override(1500, 2000))
+                    .into(imageView);
+            tornado2 = false;
+        }
 
-            if (storm2) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.storm2)
-                        .into(imageView);
-                storm2 = false;
-            }
+        if (galaxy) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.galaxy)
+                    .into(imageView);
+            galaxy = false;
+        }
 
-            if (street) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.street)
-                        .into(imageView);
-                street = false;
-            }
+        if (storm) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.storm2)
+                    .into(imageView);
+            storm = false;
+        }
 
-            if (rain_ocean) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.rain_ocean)
-                        .into(imageView);
-                rain_ocean = false;
-            }
+        if (street) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.street)
+                    .into(imageView);
+            street = false;
+        }
 
-            if (rain) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.rain)
-                        .into(imageView);
-                rain = false;
-            }
+        if (rain_ocean) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.rain_ocean)
+                    .into(imageView);
+            rain_ocean = false;
+        }
 
-            if (lightning) {
-                ImageView imageView = findViewById(R.id.imageView);
-                Glide.with(this)
-                        .load(R.raw.lightning)
-                        .into(imageView);
-                lightning = false;
-            }
+        if (rain) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.rain)
+                    .into(imageView);
+            rain = false;
+        }
+
+        if (lightning) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.lightning)
+                    .into(imageView);
+            lightning = false;
+        }
+
+        if (mindcontrol) {
+            imageView = findViewById(R.id.imageView);
+            Glide.with(this)
+                    .load(R.raw.mindcontrol)
+                    .into(imageView);
+            mindcontrol = false;
+        }
 
 
         userTitle = findViewById(R.id.scapeTitle);
@@ -144,6 +156,7 @@ public class PlayBackActivity extends AppCompatActivity {
         configureReturnButton();
     }
 
+
     private void configureReturnButton() {
 
         Button returnButton = findViewById(R.id.buttonReturn);
@@ -159,7 +172,4 @@ public class PlayBackActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 }

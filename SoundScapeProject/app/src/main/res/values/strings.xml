@@ -47,14 +47,15 @@
 
     <string-array name="gif_spinner">
         <item>Choose GIF</item>
-        <item>Tornado</item>
-        <item>Torndo 2</item>
-        <item>storm</item>
-        <item>storm2</item>
+        <item>Twister</item>
+        <item>Twister2</item>
+        <item>Galaxy</item>
+        <item>Storm</item>
         <item>Street</item>
-        <item>Rain and Ocean</item>
+        <item>Ocean</item>
         <item>Rain</item>
         <item>Lightning</item>
+        <item>Mind Control</item>
 
     </string-array>
 

@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".PlayBackActivity">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/ocean_doggo"
-        />
-
     <Button
         android:id="@+id/buttonReturn"
         android:layout_width="wrap_content"
@@ -66,36 +60,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scapeTitle" />
 
-    <!--<WebView-->
-        <!--android:id="@+id/gifWebView"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/playButton"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/scapeTitle" />-->
-
-    <!--<ImageView-->
-        <!--android:id="@+id/gifImageView"-->
-        <!--android:layout_width="403dp"-->
-        <!--android:layout_height="508dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:contentDescription="Image"-->
-        <!--android:scaleType="fitCenter"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--tools:srcCompat="@drawable/rain_ocean" />-->
-
-    <!--<pl.droidsonroids.gif.GifImageView-->
-        <!--android:id="@+id/gifImageView"-->
-        <!--android:layout_width="150dp"-->
-        <!--android:layout_height="117dp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/playButton"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/scapeTitle" />-->
-    <!--// android:src="@drawable/your_gif_file_name"/>-->
 </android.support.constraint.ConstraintLayout>
