@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         mainActivity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
 
 
         //initialize mp3 files

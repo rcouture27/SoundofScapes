@@ -45,7 +45,7 @@ public class PlayBackActivity extends AppCompatActivity {
             imageView = findViewById(R.id.imageView);
             Glide.with(this)
                     .load(R.raw.tornado)
-                    .apply(new RequestOptions().override(3400, 2800))
+                    .apply(new RequestOptions().override(4000, 1500))
                     .into(imageView);
             tornado = false;
         }
@@ -53,8 +53,8 @@ public class PlayBackActivity extends AppCompatActivity {
         if (tornado2) {
             imageView = findViewById(R.id.imageView);
             Glide.with(this)
-                    .load(R.raw.tornado2test1)
-                    .apply(new RequestOptions().override(1500, 2000))
+                    .load(R.raw.tornado2)
+                    .apply(new RequestOptions().override(2000, 1500))
                     .into(imageView);
             tornado2 = false;
         }
@@ -70,7 +70,8 @@ public class PlayBackActivity extends AppCompatActivity {
         if (storm) {
             imageView = findViewById(R.id.imageView);
             Glide.with(this)
-                    .load(R.raw.storm2)
+                    .load(R.raw.stormtest)
+                    .apply(new RequestOptions().override(2000, 1500))
                     .into(imageView);
             storm = false;
         }
@@ -87,6 +88,7 @@ public class PlayBackActivity extends AppCompatActivity {
             imageView = findViewById(R.id.imageView);
             Glide.with(this)
                     .load(R.raw.rain_ocean)
+                    .apply(new RequestOptions().override(2000, 1500))
                     .into(imageView);
             rain_ocean = false;
         }
@@ -95,6 +97,7 @@ public class PlayBackActivity extends AppCompatActivity {
             imageView = findViewById(R.id.imageView);
             Glide.with(this)
                     .load(R.raw.rain)
+                    .apply(new RequestOptions().override(2000, 1500))
                     .into(imageView);
             rain = false;
         }
